@@ -31,6 +31,7 @@ namespace DevIO.MvcIdentity
                   options.UseSqlServer(Configuration.GetConnectionString("AspNetMvcCoreIdentityContextConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<AspNetMvcCoreIdentityContext>();
 
