@@ -23,7 +23,6 @@ namespace DevIO.MvcIdentity
             services.RegisterServices();
 
             services.AddControllersWithViews();
-            //services.AddRazorPages();
         }
 
         
@@ -35,8 +34,9 @@ namespace DevIO.MvcIdentity
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                
+                app.UseExceptionHandler("/erro/500");
+                app.UseStatusCodePagesWithRedirects("/erro/{0}");
+
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
