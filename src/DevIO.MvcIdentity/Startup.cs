@@ -1,4 +1,5 @@
 using DevIO.MvcIdentity.Configuration;
+using KissLog.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -46,6 +47,7 @@ namespace DevIO.MvcIdentity
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseKissLogMiddleware(options => LogConfig.ConfigureKissLog(options, Configuration));
 
             app.UseEndpoints(endpoints =>
             {
@@ -55,6 +57,7 @@ namespace DevIO.MvcIdentity
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
     }
 }

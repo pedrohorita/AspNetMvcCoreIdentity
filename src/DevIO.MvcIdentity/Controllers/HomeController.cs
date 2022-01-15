@@ -1,13 +1,9 @@
-﻿using DevIO.MvcIdentity.Models;
-using DevIO.MvcIdentity.Extensions;
+﻿using DevIO.MvcIdentity.Extensions;
+using DevIO.MvcIdentity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DevIO.MvcIdentity.Controllers
 {
@@ -15,8 +11,7 @@ namespace DevIO.MvcIdentity.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        
+                
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -25,6 +20,7 @@ namespace DevIO.MvcIdentity.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            _logger.LogTrace("Usuario acessou a home!");
             return View();
         }
         
@@ -36,6 +32,15 @@ namespace DevIO.MvcIdentity.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Secret()
         {
+            try
+            {
+                throw new Exception("Algo horrivel ocorreu!");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(new EventId(403), e, "teste log");
+                throw;
+            }
             return View();
         }
 
