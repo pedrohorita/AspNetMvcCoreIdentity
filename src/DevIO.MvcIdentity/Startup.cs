@@ -1,4 +1,5 @@
 using DevIO.MvcIdentity.Configuration;
+using DevIO.MvcIdentity.Extensions;
 using KissLog.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,7 +24,10 @@ namespace DevIO.MvcIdentity
             services.AddAuthorizationConfig();
             services.RegisterServices();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(typeof(AuditoriaFilter));
+            });
         }
 
         

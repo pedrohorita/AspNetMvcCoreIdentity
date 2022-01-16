@@ -1,4 +1,5 @@
 ﻿using DevIO.MvcIdentity.Extensions;
+using KissLog;
 using KissLog.AspNetCore;
 using KissLog.Formatters;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,7 @@ namespace DevIO.MvcIdentity.Configuration
 
             services.AddHttpContextAccessor();
 
+            services.AddScoped<IKLogger>((provider) => Logger.Factory.Get());
             services.AddLogging(logging =>
             {
                 logging.AddKissLog(options =>
@@ -30,6 +32,8 @@ namespace DevIO.MvcIdentity.Configuration
                     };
                 });
             });
+
+            services.AddScoped<AuditoriaFilter>();
 
             return services; 
         }

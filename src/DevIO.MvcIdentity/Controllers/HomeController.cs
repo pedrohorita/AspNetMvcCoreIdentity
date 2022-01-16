@@ -1,5 +1,6 @@
 ﻿using DevIO.MvcIdentity.Extensions;
 using DevIO.MvcIdentity.Models;
+using KissLog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,9 +11,9 @@ namespace DevIO.MvcIdentity.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IKLogger _logger;
                 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IKLogger logger)
         {
             _logger = logger;
         }
@@ -20,7 +21,7 @@ namespace DevIO.MvcIdentity.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            _logger.LogTrace("Usuario acessou a home!");
+            _logger.Trace("Usuario acessou a home!");
             return View();
         }
         
@@ -34,14 +35,14 @@ namespace DevIO.MvcIdentity.Controllers
         {
             try
             {
-                throw new Exception("Algo horrivel ocorreu!");
+                return View();
             }
             catch (Exception e)
             {
-                _logger.LogError(new EventId(403), e, "teste log");
+                _logger.Error(e);
                 throw;
             }
-            return View();
+            
         }
 
         [Authorize(Policy = "PodeExcluir")]
